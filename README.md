@@ -1,7 +1,7 @@
 read me
 
-sql += @"select IDNO, PL_PkNo, Status, ActType from SubCusData where PL_PkNo=@PL_PkNo and idno like '" + IDNO + "%' "
-     + @" union all "
-     + @" select IDNO, PL_PkNo, Status, ActType from SubCusDataTransit where PL_PkNo=@PL_PkNo and idno like '" + IDNO + "%' "
-     + @" order by IDNO";
+string tdWhere = " where BranchId = '" + BranchId + "' And IDNO like '" + IDNO + "'+'%' and Status<>'D' and (Convert(varchar, CreateDate, 112)=Convert(varchar, GETDATE(), 112) or Convert(varchar, ModifiedDate, 112)=Convert(varchar, GETDATE(), 112))";
+sql += "select IDNO, ActType from SubCusData " + tdWhere
+     + " union all "
+     + "select IDNO, ActType from SubCusDataTransit " + tdWhere;
 
